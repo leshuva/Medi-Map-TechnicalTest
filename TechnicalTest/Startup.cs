@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using TechnicalTest.ApplicationServices;
+using TechnicalTest.Domain_Services;
 
 namespace TechnicalTest;
 
@@ -17,6 +18,9 @@ public class Startup(IConfiguration configuration)
         
         // Application Services
         services.AddScoped<IPatientApplicationService, PatientApplicationService>();
+        
+        // Domain Services
+        services.AddScoped<IPatientDomainService, PatientDomainService>();
     }
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

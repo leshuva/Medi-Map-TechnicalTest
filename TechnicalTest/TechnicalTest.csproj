@@ -20,6 +20,9 @@
     <Compile Update="ApplicationServices\PatientApplicationService.cs">
       <DependentUpon>IPatientApplicationService.cs</DependentUpon>
     </Compile>
+    <Compile Update="Domain Services\PatientDomainService.cs">
+      <DependentUpon>IPatientDomainService.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
 
 

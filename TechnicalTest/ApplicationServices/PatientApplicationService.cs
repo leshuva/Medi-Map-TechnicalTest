@@ -1,9 +1,11 @@
+using TechnicalTest.Domain_Services;
+
 namespace TechnicalTest.ApplicationServices;
 
-public class PatientApplicationService : IPatientApplicationService
+public class PatientApplicationService(IPatientDomainService patientDomainService) : IPatientApplicationService
 {
     public string Test()
     {
-        return "Testing Application Service";
+        return patientDomainService.GetPatientDetails();
     }
 }
