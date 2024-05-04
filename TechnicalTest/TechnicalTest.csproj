@@ -16,5 +16,11 @@
     <Folder Include="sql\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Update="ApplicationServices\PatientApplicationService.cs">
+      <DependentUpon>IPatientApplicationService.cs</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
 
 </Project>
