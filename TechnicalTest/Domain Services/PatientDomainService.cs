@@ -71,6 +71,32 @@ public class PatientDomainService : IPatientDomainService
         return patientDetails;
     }
 
+    public bool AddPatientToDb(PatientDetails patientDetails)
+    {
+        try
+        {
+            var connectionString = GetDbConnectionString();
+            using var connection = new SqlConnection(connectionString);
+            connection.Open();
+
+            const string sql = "INSERT INTO dbo.Patient (FirstName, LastName, Gender, DOB, HeightCms, WeightKgs) VALUES (@FirstName, @LastName, @Gender, @DOB, @HeightCms, @WeightKgs)";
+
+            using var command = new SqlCommand(sql, connection);
+            command.Parameters.AddWithValue("@FirstName", patientDetails.FirstName);
+            command.Parameters.AddWithValue("@LastName", patientDetails.LastName);
+            command.Parameters.AddWithValue("@Gender", patientDetails.Gender);
+            command.Parameters.AddWithValue("@DOB", patientDetails.Dob);
+            command.Parameters.AddWithValue("@HeightCms", patientDetails.Height);
+            command.Parameters.AddWithValue("@WeightKgs", patientDetails.Weight);
+
+            return command.ExecuteNonQuery() > 0;
+        }
+        catch (SqlException)
+        {
+            return false;
+        }
+    }
+
     private static string GetDbConnectionString()
     {
         var builder = new SqlConnectionStringBuilder
