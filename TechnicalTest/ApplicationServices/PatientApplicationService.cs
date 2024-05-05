@@ -4,8 +4,8 @@ namespace TechnicalTest.ApplicationServices;
 
 public class PatientApplicationService(IPatientDomainService patientDomainService) : IPatientApplicationService
 {
-    public string Test()
+    public bool CheckIfPatientExists(int patientId)
     {
-        return patientDomainService.GetPatientDetails();
+        return patientDomainService.IsPatientInDb(patientId);
     }
 }

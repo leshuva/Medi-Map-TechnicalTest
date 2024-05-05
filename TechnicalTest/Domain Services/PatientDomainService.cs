@@ -4,38 +4,49 @@ namespace TechnicalTest.Domain_Services;
 
 public class PatientDomainService : IPatientDomainService
 {
-    public string GetPatientDetails()
+    public bool IsPatientInDb(int patientId)
     {
-        var result = "";
-        
-        try 
-        { 
-            var builder = new SqlConnectionStringBuilder
-            {
-                DataSource = "",
-                UserID = "",
-                Password = "",
-                InitialCatalog = ""
-            };
+        var isPatientInDb = false;
 
-            using var connection = new SqlConnection(builder.ConnectionString);
-            connection.Open();       
+        try
+        {
+            var connectionString = GetDbConnectionString();
+            using var connection = new SqlConnection(connectionString);
+            connection.Open();
 
-            const string sql = "SELECT * FROM dbo.Patient";
+            const string sql = "SELECT * FROM dbo.Patient WHERE PatientID = @PatientId";
 
             using var command = new SqlCommand(sql, connection);
+            command.Parameters.AddWithValue("@PatientId", patientId);
             using var reader = command.ExecuteReader();
             while (reader.Read())
             {
-                var test = reader.GetInt32(0);
-                result += $",{test}";
+                var id = reader.GetInt32(0);
+                if (patientId == id)
+                {
+                    isPatientInDb = true;
+                    break;
+                }
             }
         }
-        catch (SqlException e)
+        catch (SqlException)
         {
-            result = e.ToString();
+            return false;
         }
-        
-        return result;
+
+        return isPatientInDb;
+    }
+
+    private static string GetDbConnectionString()
+    {
+        var builder = new SqlConnectionStringBuilder
+        {
+            DataSource = "cool-server-in-azure.database.windows.net",
+            UserID = "cool-server-in-azure-admin",
+            Password = "hKK@$!2Z9NTT",
+            InitialCatalog = "medimap-code-test"
+        };
+
+        return builder.ConnectionString;
     }
 }

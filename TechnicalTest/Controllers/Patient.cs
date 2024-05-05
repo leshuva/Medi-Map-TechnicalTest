@@ -1,17 +1,21 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
+using TechnicalTest.ApplicationServices;
 
-namespace TechnicalTest.Controllers
+namespace TechnicalTest.Controllers;
+
+[ApiController]
+[Route("[controller]")]
+public class Patient(IPatientApplicationService patientApplicationService) : ControllerBase
 {
-    [ApiController]
-    [Route("[controller]")]
-    public class Patient : ControllerBase
+    [HttpPost]
+    public IActionResult CalculateBmi([FromBody] PatientDetails patientDetails)
     {
-    
-        [HttpPost]
-        public void Post([FromBody] PatientDetails value)
+        if (!ModelState.IsValid)
         {
-         
+            return BadRequest(ModelState);
         }
+
+        var patientExists = patientApplicationService.CheckIfPatientExists(patientDetails.PatientId);
+        return Ok($"Patient exists in db: {patientExists}");
     }
 }
