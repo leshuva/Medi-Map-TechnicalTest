@@ -1,12 +1,20 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace TechnicalTest
+namespace TechnicalTest;
+
+public class PatientDetails
 {
-    public class PatientDetails
-    {
-       
-    }
+    public int PatientId { get; set; }
+
+    public string FirstName { get; set; }
+
+    public string LastName { get; set; }
+
+    public string Gender { get; set; }
+
+    public DateTime Dob { get; set; }
+        
+    public int Height { get; set; }
+
+    public int Weight { get; set; }
 }
