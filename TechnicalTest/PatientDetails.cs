@@ -14,7 +14,7 @@ public class PatientDetails
 
     public DateTime Dob { get; set; }
         
-    public int Height { get; set; }
+    public decimal Height { get; set; }
 
-    public int Weight { get; set; }
+    public decimal Weight { get; set; }
 }
