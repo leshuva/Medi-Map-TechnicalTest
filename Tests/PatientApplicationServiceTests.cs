@@ -1,3 +1,4 @@
+using System;
 using Xunit;
 using Moq;
 using FluentAssertions;
@@ -63,5 +64,30 @@ public class PatientApplicationServiceTests
         
         // Assert
         patientBmi.Should().Be(expectedResult);
+    }
+    
+    [Fact]
+    public void CreatePatientRecord_ValidPatientData_ReturnsTrue()
+    {
+        // Arrange
+        var patientDomainServiceMock = new Mock<IPatientDomainService>();
+        var patientApplicationService = new PatientApplicationService(patientDomainServiceMock.Object);
+        const int newlyCreatedPatientId = 1;
+        var patientDetails = new PatientDetails
+        {
+            FirstName = "James",
+            LastName = "Hurren",
+            Gender = "Male",
+            Dob = DateTime.UtcNow,
+            Height = 175,
+            Weight = 70
+        };
+        patientDomainServiceMock.Setup(p => p.AddPatientToDb(patientDetails)).Returns(newlyCreatedPatientId);
+        
+        // Act
+        var patientId = patientApplicationService.CreatePatientRecord(patientDetails);
+        
+        // Assert
+        patientId.Should().Be(newlyCreatedPatientId);
     }
 }

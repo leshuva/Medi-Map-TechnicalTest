@@ -21,4 +21,9 @@ public class PatientApplicationService(IPatientDomainService patientDomainServic
         
         return bmi;
     }
+    
+    public int CreatePatientRecord(PatientDetails patientDetails)
+    {
+        return patientDomainService.AddPatientToDb(patientDetails);
+    }
 }

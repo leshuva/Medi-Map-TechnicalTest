@@ -1,3 +1,4 @@
+using System;
 using Microsoft.Data.SqlClient;
 
 namespace TechnicalTest.Domain_Services;
@@ -71,7 +72,7 @@ public class PatientDomainService : IPatientDomainService
         return patientDetails;
     }
 
-    public bool AddPatientToDb(PatientDetails patientDetails)
+    public int AddPatientToDb(PatientDetails patientDetails)
     {
         try
         {
@@ -79,7 +80,9 @@ public class PatientDomainService : IPatientDomainService
             using var connection = new SqlConnection(connectionString);
             connection.Open();
 
-            const string sql = "INSERT INTO dbo.Patient (FirstName, LastName, Gender, DOB, HeightCms, WeightKgs) VALUES (@FirstName, @LastName, @Gender, @DOB, @HeightCms, @WeightKgs)";
+            const string sql = "INSERT INTO dbo.Patient (FirstName, LastName, Gender, DOB, HeightCms, WeightKgs) " +
+                               "VALUES (@FirstName, @LastName, @Gender, @DOB, @HeightCms, @WeightKgs); " +
+                               "SELECT SCOPE_IDENTITY() AS InsertedID;";
 
             using var command = new SqlCommand(sql, connection);
             command.Parameters.AddWithValue("@FirstName", patientDetails.FirstName);
@@ -89,11 +92,11 @@ public class PatientDomainService : IPatientDomainService
             command.Parameters.AddWithValue("@HeightCms", patientDetails.Height);
             command.Parameters.AddWithValue("@WeightKgs", patientDetails.Weight);
 
-            return command.ExecuteNonQuery() > 0;
+            return Convert.ToInt32(command.ExecuteScalar()); // Return the id of the newly created patient 
         }
         catch (SqlException)
         {
-            return false;
+            return 0;
         }
     }
 

@@ -19,7 +19,7 @@ public interface IPatientDomainService
     /// <summary>
     /// Add a new patient to the database.
     /// </summary>
-    /// <param name="patientDetails">The PatientDetails object containing the necessary patient data</param>
-    /// <returns>True if the patient was successfully added to the database, false otherwise</returns>
-    bool AddPatientToDb(PatientDetails patientDetails);
+    /// <param name="patientDetails">he PatientDetails class containing the required details to create a new patient record.</param>
+    /// <returns>The id of the newly created patient</returns>
+    int AddPatientToDb(PatientDetails patientDetails);
 }

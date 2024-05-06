@@ -15,4 +15,11 @@ public interface IPatientApplicationService
     /// <param name="patientId">The id of the patient.</param>
     /// <returns>The calculated BMI of the patient.</returns>
     decimal CalculateBmi(int patientId);
+
+    /// <summary>
+    /// Add a new patient record to the database.
+    /// </summary>
+    /// <param name="patientDetails">The PatientDetails class containing the required details to create a new patient record.</param>
+    /// <returns>The id of the newly created patient.</returns>
+    int CreatePatientRecord(PatientDetails patientDetails);
 }
