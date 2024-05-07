@@ -18,9 +18,11 @@ public class Startup(IConfiguration configuration)
         
         // Application Services
         services.AddScoped<IPatientApplicationService, PatientApplicationService>();
+        services.AddScoped<IMedicationApplicationService, MedicationApplicationService>();
         
         // Domain Services
         services.AddScoped<IPatientDomainService, PatientDomainService>();
+        services.AddScoped<IMedicationDomainService, MedicationDomainService>();
     }
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
