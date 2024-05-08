@@ -6,7 +6,7 @@ namespace TechnicalTest.Domain_Services;
 
 public class PatientDomainService(IErrorLogger errorLogger, IConfiguration configuration) : IPatientDomainService
 {
-    public bool IsPatientInDb(int patientId)
+    public bool? CheckIfPatientExists(int patientId)
     {
         var isPatientInDb = false;
 
@@ -15,26 +15,21 @@ public class PatientDomainService(IErrorLogger errorLogger, IConfiguration confi
             var connectionString = GetDbConnectionString();
             using var connection = new SqlConnection(connectionString);
             connection.Open();
-
+            
             const string sql = "SELECT * FROM dbo.Patient WHERE PatientID = @PatientId";
 
             using var command = new SqlCommand(sql, connection);
             command.Parameters.AddWithValue("@PatientId", patientId);
             using var reader = command.ExecuteReader();
-            while (reader.Read())
+            if (reader.Read())
             {
-                var id = reader.GetInt32(0);
-                if (patientId == id)
-                {
-                    isPatientInDb = true;
-                    break;
-                }
+                isPatientInDb = true;
             }
         }
         catch (SqlException e)
         {
             errorLogger.LogError(e.Message);
-            return false;
+            return null;
         }
 
         return isPatientInDb;
@@ -69,13 +64,14 @@ public class PatientDomainService(IErrorLogger errorLogger, IConfiguration confi
         catch (SqlException e)
         {
             errorLogger.LogError(e.Message);
-            return new PatientDetails();
+            patientDetails.PatientId = 0;
+            return patientDetails;
         }
         
         return patientDetails;
     }
 
-    public int AddPatientToDb(PatientDetails patientDetails)
+    public int? CreatePatient(PatientDetails patientDetails)
     {
         try
         {
@@ -100,7 +96,7 @@ public class PatientDomainService(IErrorLogger errorLogger, IConfiguration confi
         catch (SqlException e)
         {
             errorLogger.LogError(e.Message);
-            return 0;
+            return null;
         }
     }
 

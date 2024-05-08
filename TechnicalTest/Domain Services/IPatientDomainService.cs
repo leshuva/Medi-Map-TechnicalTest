@@ -3,23 +3,24 @@ namespace TechnicalTest.Domain_Services;
 public interface IPatientDomainService
 {
     /// <summary>
-    /// Checks if a patient exists in the database.
+    /// Checks if a patient already exists in the database.
     /// </summary>
-    /// <param name="patientId">The id of the patient to check.</param>
-    /// <returns>True if the patient already exists in the database, false otherwise</returns>
-    bool IsPatientInDb(int patientId);
+    /// <param name="patientId">The id of the patient.</param>
+    /// <returns>True if the patient already exists, false otherwise, or null if a database error occurs.</returns>
+    bool? CheckIfPatientExists(int patientId);
 
     /// <summary>
     /// Get all details from a patient by id.
     /// </summary>
-    /// <param name="patientId">The id of the patient</param>
-    /// <returns>A PatientDetails object containing all of the patient details.</returns>
+    /// <param name="patientId">The id of the patient.</param>
+    /// <returns>A PatientDetails object containing all the patient details, or a PatientDetails object with an id of
+    /// 0 if a database error occurs. </returns>
     PatientDetails GetPatientDetailsById(int patientId);
 
     /// <summary>
-    /// Add a new patient to the database.
+    /// Creates a new patient.
     /// </summary>
-    /// <param name="patientDetails">he PatientDetails class containing the required details to create a new patient record.</param>
-    /// <returns>The id of the newly created patient</returns>
-    int AddPatientToDb(PatientDetails patientDetails);
+    /// <param name="patientDetails">A PatientDetails object containing the required details to create a new patient.</param>
+    /// <returns>The id of the newly created patient, or null if a database error occurs.</returns>
+    int? CreatePatient(PatientDetails patientDetails);
 }

@@ -1,18 +1,31 @@
 using System;
+using TechnicalTest.Constants;
 using TechnicalTest.Domain_Services;
+using TechnicalTest.Exceptions;
 
 namespace TechnicalTest.ApplicationServices;
 
-public class PatientApplicationService(IPatientDomainService patientDomainService) : IPatientApplicationService
+public class PatientApplicationService(IPatientDomainService patientDomainService, IErrorLogger errorLogger) : IPatientApplicationService
 {
     public bool CheckIfPatientExists(int patientId)
     {
-        return patientDomainService.IsPatientInDb(patientId);
+        var patientAlreadyExists = patientDomainService.CheckIfPatientExists(patientId);
+        if (patientAlreadyExists is null)
+        {
+            errorLogger.LogError(ExceptionMessages.DatabaseErrorMessage);
+            throw new DatabaseErrorException(ExceptionMessages.DatabaseErrorMessage);
+        } 
+        return patientAlreadyExists.Value;
     }
 
     public decimal CalculateBmi(int patientId)
     {
         var patientDetails = patientDomainService.GetPatientDetailsById(patientId);
+        if (patientDetails.PatientId == 0)
+        {
+            errorLogger.LogError(ExceptionMessages.DatabaseErrorMessage);
+            throw new DatabaseErrorException(ExceptionMessages.DatabaseErrorMessage);
+        }
         
         // Convert height from centimeters to meters
         var heightInMeters = patientDetails.Height / 100;
@@ -24,6 +37,12 @@ public class PatientApplicationService(IPatientDomainService patientDomainServic
     
     public int CreatePatientRecord(PatientDetails patientDetails)
     {
-        return patientDomainService.AddPatientToDb(patientDetails);
+        var newlyCreatedPatientId = patientDomainService.CreatePatient(patientDetails);
+        if (newlyCreatedPatientId is null)
+        {
+            errorLogger.LogError(ExceptionMessages.DatabaseErrorMessage);
+            throw new DatabaseErrorException(ExceptionMessages.DatabaseErrorMessage);
+        }
+        return newlyCreatedPatientId.Value;
     }
 }
