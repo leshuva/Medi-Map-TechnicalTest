@@ -2,6 +2,7 @@ using System;
 using Xunit;
 using Moq;
 using FluentAssertions;
+using TechnicalTest;
 using TechnicalTest.ApplicationServices;
 using TechnicalTest.Constants;
 using TechnicalTest.Domain_Services;
@@ -16,7 +17,8 @@ public class MedicationApplicationServiceTests
     {
         // Arrange
         var medicationDomainServiceMock = new Mock<IMedicationDomainService>();
-        var medicationApplicationService = new MedicationApplicationService(medicationDomainServiceMock.Object);
+        var errorLoggerMock = new Mock<IErrorLogger>();
+        var medicationApplicationService = new MedicationApplicationService(medicationDomainServiceMock.Object, errorLoggerMock.Object);
         
         // Act
         Action action = () =>
@@ -31,7 +33,8 @@ public class MedicationApplicationServiceTests
     {
         // Arrange
         var medicationDomainServiceMock = new Mock<IMedicationDomainService>();
-        var medicationApplicationService = new MedicationApplicationService(medicationDomainServiceMock.Object);
+        var errorLoggerMock = new Mock<IErrorLogger>();
+        var medicationApplicationService = new MedicationApplicationService(medicationDomainServiceMock.Object, errorLoggerMock.Object);
         const int patientId = 1;
         medicationDomainServiceMock.Setup(m => m.CheckIfMedicationRecordExists(patientId))
             .Returns(true);
@@ -49,7 +52,8 @@ public class MedicationApplicationServiceTests
     {
         // Arrange
         var medicationDomainServiceMock = new Mock<IMedicationDomainService>();
-        var medicationApplicationService = new MedicationApplicationService(medicationDomainServiceMock.Object);
+        var errorLoggerMock = new Mock<IErrorLogger>();
+        var medicationApplicationService = new MedicationApplicationService(medicationDomainServiceMock.Object, errorLoggerMock.Object);
         const int patientId = 1;
         const int medicationRecordId = 1;
         medicationDomainServiceMock.Setup(m => m.CheckIfMedicationRecordExists(patientId))

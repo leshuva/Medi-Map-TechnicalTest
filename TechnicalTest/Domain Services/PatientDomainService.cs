@@ -3,7 +3,7 @@ using Microsoft.Data.SqlClient;
 
 namespace TechnicalTest.Domain_Services;
 
-public class PatientDomainService : IPatientDomainService
+public class PatientDomainService(IErrorLogger errorLogger) : IPatientDomainService
 {
     public bool IsPatientInDb(int patientId)
     {
@@ -30,8 +30,9 @@ public class PatientDomainService : IPatientDomainService
                 }
             }
         }
-        catch (SqlException)
+        catch (SqlException e)
         {
+            errorLogger.LogError(e.Message);
             return false;
         }
 
@@ -64,8 +65,9 @@ public class PatientDomainService : IPatientDomainService
                 patientDetails.Weight = reader.GetDecimal(6);
             }
         }
-        catch (SqlException)
+        catch (SqlException e)
         {
+            errorLogger.LogError(e.Message);
             return new PatientDetails();
         }
         
@@ -94,8 +96,9 @@ public class PatientDomainService : IPatientDomainService
 
             return Convert.ToInt32(command.ExecuteScalar()); // Return the id of the newly created patient 
         }
-        catch (SqlException)
+        catch (SqlException e)
         {
+            errorLogger.LogError(e.Message);
             return 0;
         }
     }

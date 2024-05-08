@@ -15,7 +15,8 @@ public class Startup(IConfiguration configuration)
     public void ConfigureServices(IServiceCollection services)
     {
         services.AddControllers();
-        
+
+        services.AddScoped<IErrorLogger, ErrorLogger>();
         // Application Services
         services.AddScoped<IPatientApplicationService, PatientApplicationService>();
         services.AddScoped<IMedicationApplicationService, MedicationApplicationService>();

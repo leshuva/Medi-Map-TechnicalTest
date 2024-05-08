@@ -26,6 +26,12 @@
     <Compile Update="ApplicationServices\MedicationApplicationService.cs">
       <DependentUpon>IMedicationApplicationService.cs</DependentUpon>
     </Compile>
+    <Compile Update="ErrorLogger.cs">
+      <DependentUpon>IErrorLogger.cs</DependentUpon>
+    </Compile>
+    <Compile Update="Domain Services\MedicationDomainService.cs">
+      <DependentUpon>IMedicationDomainService.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
 
 

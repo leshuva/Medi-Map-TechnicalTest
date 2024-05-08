@@ -3,7 +3,7 @@ using Microsoft.Data.SqlClient;
 
 namespace TechnicalTest.Domain_Services;
 
-public class MedicationDomainService : IMedicationDomainService
+public class MedicationDomainService(IErrorLogger errorLogger) : IMedicationDomainService
 {
     public bool? CheckIfMedicationRecordExists(int patientId)
     {
@@ -25,8 +25,9 @@ public class MedicationDomainService : IMedicationDomainService
                 isMedicationRecordInDb = true;
             }
         }
-        catch (SqlException)
+        catch (SqlException e)
         {
+            errorLogger.LogError(e.Message);
             return null;
         }
 
@@ -51,8 +52,9 @@ public class MedicationDomainService : IMedicationDomainService
 
             return Convert.ToInt32(command.ExecuteScalar());
         }
-        catch (SqlException)
+        catch (SqlException e)
         {
+            errorLogger.LogError(e.Message);
             return null;
         }
     }
