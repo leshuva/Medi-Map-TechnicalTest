@@ -1,0 +1,16 @@
+PatientID,FirstName,LastName,Gender,DOB,HeightCms,WeightKgs
+1,Barbara,Smith,Female,1944-08-28 00:00:00.000,165.0,75.6
+2,Helen,Castillo,Female,1963-10-19 00:00:00.000,161.0,65.0
+3,Ivan,Winter,Male,1942-10-12 00:00:00.000,175.3,85.0
+4,Mateo,Rossi,Male,2001-05-30 00:00:00.000,180.0,72.0
+5,Eva,Petrov,Female,1995-09-21 00:00:00.000,177.2,70.0
+6,Isabella,Garcia,Female,1999-12-10 10:00:00.000,169.4,68.0
+18,Wei,Chen,Male,1995-04-05 11:23:40.000,180.0,80.0
+19,James,Clarke,Male,1999-07-07 12:23:11.000,190.0,100.0
+20,Deborah,Smith,Female,1965-08-15 09:00:11.000,170.0,80.0
+21,Zaha,Diaz,Other,1989-09-20 09:00:00.000,175.0,70.0
+22,Tyler,Brown,Male,1992-02-10 09:03:00.000,188.0,85.0
+23,Sophie,Duncan,Female,1997-10-10 04:03:00.000,170.0,70.0
+24,Mayuko,Williams,Female,1995-05-10 00:00:00.000,170.0,70.0
+25,Kenzie,Tandun,Male,1995-09-14 00:00:00.000,170.0,70.0
+26,Isabella,Smith,Female,1996-04-07 00:00:00.000,180.7,75.0
