@@ -1,17 +1,36 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <LangVersion>12</LangVersion>
+    <TargetFramework>net8.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.Data.SqlClient" Version="5.2.0" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
     <PackageReference Include="System.Data.SqlClient" Version="4.8.2" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="data\" />
     <Folder Include="sql\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="ApplicationServices\PatientApplicationService.cs">
+      <DependentUpon>IPatientApplicationService.cs</DependentUpon>
+    </Compile>
+    <Compile Update="Domain Services\PatientDomainService.cs">
+      <DependentUpon>IPatientDomainService.cs</DependentUpon>
+    </Compile>
+    <Compile Update="ApplicationServices\MedicationApplicationService.cs">
+      <DependentUpon>IMedicationApplicationService.cs</DependentUpon>
+    </Compile>
+    <Compile Update="ErrorLogger.cs">
+      <DependentUpon>IErrorLogger.cs</DependentUpon>
+    </Compile>
+    <Compile Update="Domain Services\MedicationDomainService.cs">
+      <DependentUpon>IMedicationDomainService.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
 
 

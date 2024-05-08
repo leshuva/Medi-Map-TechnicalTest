@@ -1,17 +1,14 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
+namespace TechnicalTest.Controllers;
 
-namespace TechnicalTest.Controllers
+[ApiController]
+[Route("[controller]")]
+public class Home : ControllerBase
 {
-    [ApiController]
-    [Route("[controller]")]
-    public class Home : ControllerBase
+    [HttpGet]
+    public IActionResult Index()
     {
-        [HttpGet]
-        public IActionResult Index()
-        {
-            return Ok($"Welcome to Medi-Map Technical Test!");
-        }
-
+        return Ok("Welcome to Medi-Map Technical Test!");
     }
 }
