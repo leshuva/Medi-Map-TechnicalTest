@@ -1,8 +1,9 @@
 using Microsoft.Data.SqlClient;
+using Microsoft.Extensions.Configuration;
 
 namespace TechnicalTest;
 
-public class ErrorLogger : IErrorLogger
+public class ErrorLogger(IConfiguration configuration) : IErrorLogger
 {
     public void LogError(string errorMessage)
     {
@@ -23,14 +24,14 @@ public class ErrorLogger : IErrorLogger
         }
     }
     
-    private static string GetDbConnectionString()
+    private string GetDbConnectionString()
     {
         var builder = new SqlConnectionStringBuilder
         {
-            DataSource = "",
-            UserID = "",
-            Password = "",
-            InitialCatalog = ""
+            DataSource = configuration["DatabaseConnection:DataSource"],
+            UserID = configuration["DatabaseConnection:UserID"],
+            Password = configuration["DatabaseConnection:Password"],
+            InitialCatalog = configuration["DatabaseConnection:InitialCatalog"]
         };
 
         return builder.ConnectionString;

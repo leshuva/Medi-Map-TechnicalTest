@@ -16,7 +16,9 @@ public class Startup(IConfiguration configuration)
     {
         services.AddControllers();
 
+        services.AddSingleton(Configuration);
         services.AddScoped<IErrorLogger, ErrorLogger>();
+        
         // Application Services
         services.AddScoped<IPatientApplicationService, PatientApplicationService>();
         services.AddScoped<IMedicationApplicationService, MedicationApplicationService>();

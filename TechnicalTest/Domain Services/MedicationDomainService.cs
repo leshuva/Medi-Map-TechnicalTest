@@ -1,9 +1,10 @@
 using System;
 using Microsoft.Data.SqlClient;
+using Microsoft.Extensions.Configuration;
 
 namespace TechnicalTest.Domain_Services;
 
-public class MedicationDomainService(IErrorLogger errorLogger) : IMedicationDomainService
+public class MedicationDomainService(IErrorLogger errorLogger, IConfiguration configuration) : IMedicationDomainService
 {
     public bool? CheckIfMedicationRecordExists(int patientId)
     {
@@ -59,14 +60,14 @@ public class MedicationDomainService(IErrorLogger errorLogger) : IMedicationDoma
         }
     }
     
-    private static string GetDbConnectionString()
+    private string GetDbConnectionString()
     {
         var builder = new SqlConnectionStringBuilder
         {
-            DataSource = "",
-            UserID = "",
-            Password = "",
-            InitialCatalog = ""
+            DataSource = configuration["DatabaseConnection:DataSource"],
+            UserID = configuration["DatabaseConnection:UserID"],
+            Password = configuration["DatabaseConnection:Password"],
+            InitialCatalog = configuration["DatabaseConnection:InitialCatalog"]
         };
 
         return builder.ConnectionString;
