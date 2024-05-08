@@ -43,7 +43,7 @@ public class MedicationApplicationServiceTests
         Action action = () =>
             medicationApplicationService.CreateMedicationAdministrationRecord(patientId, It.IsAny<decimal>());
         
-        // Act - Assert
+        // Assert
         action.Should().Throw<DomainAlreadyExistsException>().WithMessage(string.Format(ExceptionMessages.DomainExistsErrorMessage, patientId));
     }
     
